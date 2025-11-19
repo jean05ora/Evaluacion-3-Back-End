@@ -1,0 +1,164 @@
+{% load static %}
+
+<!DOCTYPE HTML>
+
+<html>
+	<head>
+		<title>Dopetrope</title>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+
+```
+	<link rel="stylesheet" href="{% static 'miApp/assets/css/main.css' %}">
+</head>
+<body class="left-sidebar is-preload">
+	<div id="page-wrapper">
+
+		<!-- Header -->
+		<section id="header">
+
+			<!-- Logo -->
+			<h1><a href="{% url 'index' %}">E-Room</a></h1>
+
+			<!-- Nav -->
+			<nav id="nav">
+				<ul>
+					<li class="current"><a href="{% url 'index'%}">Home</a></li>
+					<li>
+						<a href="#">Tipos de sala</a>
+						<ul>
+							<li><a href="{% url 'tipos_sala' %}">Salas de estudio</a></li>
+							<li><a href="#">Salas de reunion</a></li>
+							<li><a href="#">Espacios personales</a></li>
+						</ul>
+					</li>
+
+				</ul>
+			</nav>
+
+		</section>
+
+		<!-- Main -->
+		<section id="main">
+			<div class="container">
+				<div class="row">
+
+					<div class="col-4 col-12-medium">
+
+						<!-- Sidebar -->
+						<section class="box">
+							<a href="#" class="image featured">
+								<img src="{% static 'miApp/images/pic09.jpg' %}" alt="">
+							</a>
+							<header>
+								<h3>Salas de estudio</h3>
+							</header>
+							<p>
+								Un lugar de estudio para ti y tu equipo, con aislamiento de ruido para una mejor concentracion y eficacia
+							</p>
+						</section>
+
+						<section class="box">
+							<header>
+								<h3>Salas de reunion</h3>
+							</header>
+							<p>
+								Un lugar optimo para practicar presentaciones o discusiones de temas, equipadas con proyectores y con dispositivos para transmitir
+							</p>
+
+						</section>
+						<section class="box">
+							<header>
+								<h3>Salas personales</h3>
+							</header>
+							<p>
+								Un lugar para socializar con tu equipo y relajarse 
+							</p>
+						</section>
+
+					</div>
+
+					<div class="col-8 col-12-medium imp-medium">
+
+						<!-- Content -->
+						<article class="box post">
+
+							<a href="#" class="image featured">
+								<img src="{% static 'miApp/images/pic01.jpg' %}" alt="">
+							</a>
+
+							<header>
+								<h2>Salas disponibles</h2>
+								<p>Conoce las salas disponibles en nuestro sistema</p>
+							</header>
+
+							{% for tipo, capacidad in tipos.items %}
+							<section class="box">
+								{% if tipo == "Estudio" %}
+									<img src="{% static 'miApp/salas/sala_estudio.jpg' %}" class="tipo_sala">
+								{% elif tipo == "Reunion" %}
+									<img src="{% static 'miApp/salas/sala_reunion.jpg' %}" class="tipo_sala">
+								{% elif tipo == "Personal" %}
+									<img src="{% static 'miApp/salas/sala_personal.jpg' %}" class="tipo_sala">
+								{% endif %}
+								<header>
+									<h3>Salas de tipo : {{ tipo }}</h3>
+									<h3>Capacidad: {{ capacidad }} personas</h3>
+								</header>
+								<footer>
+									<a href="{% url 'salas_tipo' tipo %}" class="button alt">Ver salas</a>
+								</footer>
+							</section>
+							{% empty %}
+							<p>No hay tipos de sala registrados.</p>
+							{% endfor %}
+
+
+
+						</article>
+
+					</div>
+
+				</div>
+			</div>
+		</section>
+
+		<!-- Footer -->
+		<section id="footer">
+			<div class="container">
+				<div class="row">
+
+					<div class="col-4 col-12-medium">
+						<section>
+							<p>
+								Plantilla HTML5 UP con Django
+							</p>
+						</section>
+					</div>
+
+					<div class="col-12">
+						<div id="copyright">
+							<ul class="links">
+								<li>Plantilla: HTML5 UP</li>
+							</ul>
+						</div>
+					</div>
+
+				</div>
+			</div>
+		</section>
+
+	</div>
+
+	<!-- Scripts -->
+	<script src="{% static 'miApp/assets/js/jquery.min.js' %}"></script>
+	<script src="{% static 'miApp/assets/js/jquery.dropotron.min.js' %}"></script>
+	<script src="{% static 'miApp/assets/js/browser.min.js' %}"></script>
+	<script src="{% static 'miApp/assets/js/breakpoints.min.js' %}"></script>
+	<script src="{% static 'miApp/assets/js/util.js' %}"></script>
+	<script src="{% static 'miApp/assets/js/main.js' %}"></script>
+
+</body>
+```
+
+</html>

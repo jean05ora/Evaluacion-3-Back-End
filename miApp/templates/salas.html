@@ -1,0 +1,155 @@
+{% load static %}
+
+<!DOCTYPE HTML>
+<html>
+<head>
+    <title>E-Room</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+    <link rel="stylesheet" href="{% static 'miApp/assets/css/main.css' %}">
+</head>
+<body class="right-sidebar is-preload">
+    <div id="page-wrapper">
+
+        <!-- Header -->
+        <section id="header">
+            <h1><a href="{% url 'index' %}">E-Room</a></h1>
+
+            <nav id="nav">
+                <ul>
+                    <li><a href="{% url 'index'%}">Home</a></li>
+                    <li class="current"><a href="{% url 'tipos_sala' %}">Tipos de sala</a></li>
+                    <li><a href="#">Conocenos!</a></li>
+                </ul>
+            </nav>
+        </section>
+
+        <!-- Main -->
+        <section id="main">
+            <div class="container">
+                <div class="row">
+
+                    <div class="col-12">
+                        <header>
+                            <h2 style="text-align:center; margin-bottom:30px;">Salas de {{ tipo }}</h2>
+                        </header>
+                    </div>
+
+                    <div class="col-8 col-12-medium">
+
+                        {% if salas %}
+                            <!-- Imagen del tipo de sala -->
+                            {% if tipo == 'Estudio' %}
+                                <img src="{% static 'miApp/salas/estudio.jpg' %}" class="sala_tipo">
+                            {% elif tipo == 'Reunion' %}
+                                <img src="{% static 'miApp/salas/reunion.jpg' %}" class="sala_tipo">
+                            {% else %}
+                                <img src="{% static 'miApp/salas/personal.jpg' %}" class="sala_tipo">
+                            {% endif %}
+
+                            <!-- Listado de salas -->
+                            {% for s in salas %}
+                                <section class="box">
+                                    <header>
+                                        <h3>{{ s.nombre_sala }}</h3>
+                                    </header>
+                                    <p>
+                                        <b>Numero de sala: </b> {{ s.numero_sala }}<br>
+                                        <b>Capacidad maxima:</b> {{ s.capacidad }} personas<br>
+                                        <b>Disponible:</b>
+                                        {% if s.disponible %}
+                                            <span style="color:green;">✅</span>
+                                        {% else %}
+                                            <span style="color:red;">❌</span>
+                                        {% endif %}
+                                    </p>
+                                    <footer>
+                                        {% if s.disponible %}
+                                            <button onclick="openReserva({{ s.id }})" class="button">Reservar</button>
+                                        {% else %}
+                                            <button class="button alt" disabled>Reservar</button>
+                                        {% endif %}
+                                    </footer>
+                                </section>
+                            {% endfor %}
+                        {% else %}
+                            <p>No se encontraron salas registradas :C</p>
+                        {% endif %}
+
+                    </div>
+
+                    <!-- Sidebar -->
+                    <div class="col-4 col-12-medium">
+                        <section class="box">
+                            <header>
+                                <h3>Información</h3>
+                            </header>
+                            <p>Para ver mas detalles y hacer tu reserva, selecciona una sala</p>
+                        </section>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- Modal de Reserva -->
+		<div id="reservaModal" class="modal" style="display:none;">
+			<div class="modal-content">
+				<span class="close" onclick="closeReserva()">&times;</span>
+				<h3>Reservar sala</h3>
+				<form id="reservaForm" method="POST" action="/reserva0/" onsubmit="return mostrarConfirmacion()">
+					{% csrf_token %}
+					<input type="text" name="rut" placeholder="RUT" required><br><br>
+					<input type="text" name="nombre" placeholder="Nombre"><br><br>
+					<button type="submit">Confirmar</button>
+				</form>
+			</div>
+		</div>
+
+
+        <!-- Footer -->
+        <section id="footer">
+            <div class="container">
+                <p style="text-align:center;">E-Room </p>
+            </div>
+        </section>
+
+    </div>
+
+    <!-- Scripts -->
+    <script src="{% static 'miApp/assets/js/jquery.min.js' %}"></script>
+    <script src="{% static 'miApp/assets/js/jquery.dropotron.min.js' %}"></script>
+    <script src="{% static 'miApp/assets/js/browser.min.js' %}"></script>
+    <script src="{% static 'miApp/assets/js/breakpoints.min.js' %}"></script>
+    <script src="{% static 'miApp/assets/js/util.js' %}"></script>
+    <script src="{% static 'miApp/assets/js/main.js' %}"></script>
+
+    <script>
+	function openReserva(salaId){
+		const modal = document.getElementById('reservaModal');
+		modal.style.display = 'block';
+		const form = document.getElementById('reservaForm');
+		form.action = `/reserva${salaId}/`;
+	}
+
+	function closeReserva(){
+		document.getElementById('reservaModal').style.display = 'none';
+	}
+
+	function mostrarConfirmacion() {
+		alert('Reserva confirmada ✅');
+		return true; 
+	}
+
+
+	window.onclick = function(event) {
+		const modal = document.getElementById('reservaModal');
+		if (event.target == modal) {
+			modal.style.display = "none";
+		}
+	}
+	</script>
+
+
+</body>
+</html>
