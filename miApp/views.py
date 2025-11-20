@@ -33,8 +33,6 @@ def salas_tipo(request, tipo):
     return render(request, 'salas.html', {'salas':salas, 'tipo':tipo})
 
 
-
-
 def reserva(request, pk):
     sala = Sala.objects.get(pk=pk)
     if not sala.disponible():
