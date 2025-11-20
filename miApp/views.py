@@ -1,6 +1,7 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from .models import Sala
 from .forms import ReservaForm
+from django.shortcuts import redirect
 
 # Create your views here.
 def index(request):
@@ -32,7 +33,7 @@ def salas_tipo(request, tipo):
     return render(request, 'salas.html', {'salas':salas, 'tipo':tipo})
 
 
-from django.shortcuts import redirect
+
 
 def reserva(request, pk):
     sala = Sala.objects.get(pk=pk)

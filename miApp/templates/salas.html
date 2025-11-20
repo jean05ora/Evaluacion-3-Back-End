@@ -99,7 +99,7 @@
 				<h3>Reservar sala</h3>
 				<form id="reservaForm" method="POST" action="/reserva0/" onsubmit="return mostrarConfirmacion()">
 					{% csrf_token %}
-					<input type="text" name="rut" placeholder="RUT" required><br><br>
+					<input type="text" name="rut" placeholder="RUT sin puntos con guion" required><br><br>
 					<input type="text" name="nombre" placeholder="Nombre"><br><br>
 					<button type="submit">Confirmar</button>
 				</form>
